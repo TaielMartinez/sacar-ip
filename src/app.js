@@ -16,17 +16,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 var credentials
 var url_token
 
-if(process.env.service_account != undefined){
+//if(process.env.service_account != undefined){
 
 	credentials = JSON.parse(process.env.service_account)
 	url_token = JSON.parse(process.env.url_token)
 	
-} else{
+//} else{
 
-	credentials = require(`../no-borrar/service-account.json`)
-	url_token = require('../no-borrar/url-token.json')
+	//credentials = require(`../no-borrar/service-account.json`)
+	//url_token = require('../no-borrar/url-token.json')
 
-}
+//}
 
 
 // variables
