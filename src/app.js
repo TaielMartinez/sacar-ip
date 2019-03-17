@@ -27,16 +27,16 @@ app.get('/', function(req, res) {
      req.connection.remoteAddress || 
      req.socket.remoteAddress ||
      (req.connection.socket ? req.connection.socket.remoteAddress : null);
-     console.log('ip client: '+ip)
-
-
-     console.log('ip npm: '+getClientAddress(req))
-
-
 
      iplocation(ip, [], (error, res) => {
  
-        console.log(res)
+        console.log('===============================================================================')
+        console.log(res.countryCode)
+        console.log(res.region)
+        console.log(res.city)
+        console.log(res.ip)
+        console.log(res.latitude+' y '+res.longitude)
+        console.log('===============================================================================')
      
     });
 
@@ -44,53 +44,6 @@ app.get('/', function(req, res) {
 
   
   });
-
-
-app.get('/res', async function(req, res) {
-
-    //===========================================================
-
-    var ip = req.headers['x-forwarded-for'] || 
-     req.connection.remoteAddress || 
-     req.socket.remoteAddress ||
-     (req.connection.socket ? req.connection.socket.remoteAddress : null);
-     console.log('ip client: '+ip)
-
-    //===========================================================
-
-	server = req.query.servidor
-
-	console.log('jugado: '+req.query.jugador+' || servidor: '+server)
-
-	var summonerData = await nombre_a_id(req.query.jugador, server)
-	var cuentaID = summonerData.accountId
-	var jugadorID = summonerData.id
-
-	console.log('ID del jugador: '+jugadorID)
-	console.log('ID de la cuenta: '+cuentaID)
-	//console.log('partidaVivo: '+summonerData)
-
-	//var jugadorHistorial = await historial(jugadorID, server)
-	//console.log(jugadorHistorial)
-
-	var partidaVivo = await partidaActual(jugadorID, server)
-
-    res.send(partidaVivo);
-
-})
-
-
-
-
-
-app.get('/champ', function(req, res) {
-
-		res.send('hola');
-})
-
-
-
-
 
 
 // listering for server
