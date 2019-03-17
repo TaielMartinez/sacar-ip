@@ -19,9 +19,11 @@ var partidaVivo
 
 
 // routes
-app.get('/', (req, res) => {
-	res.render('index')
-})
+router.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname + '/views/index.html'));
+  
+  });
+
 
 app.get('/res', async function(req, res) {
 
