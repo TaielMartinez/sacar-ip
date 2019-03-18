@@ -54,6 +54,7 @@ var rowes_respuestas;
 accessSpreadsheet()
 
 async function accessSpreadsheet(cambiar){
+    console.log('Sheet cargado')
 	const doc_respuestas = new GoogleSpreadsheet(url_token.SPREADSHEET_ID)
 	await promisify(doc_respuestas.useServiceAccountAuth)(credentials)
 	const info_respuestas = await promisify(doc_respuestas.getInfo)()
@@ -63,6 +64,7 @@ async function accessSpreadsheet(cambiar){
         if(cambiar == true){
             rows = rowes_respuestas
             rows[rows.length - 1].save()
+            console.log('Se guardaron los datos')
             accessSpreadsheet()
         }
 
@@ -75,15 +77,19 @@ async function accessSpreadsheet(cambiar){
 
 function agregarRespuesta(mensaje){
 
-        rowes_respuestas[rowes_respuestas.length] = rowes_respuestas[rowes_respuestas.length - 1]
-        rowes_respuestas[rowes_respuestas.length - 1].ip = mensaje[0]
-        rowes_respuestas[rowes_respuestas.length - 1].pais = mensaje[1]
-        rowes_respuestas[rowes_respuestas.length - 1].region = mensaje[2]
-        rowes_respuestas[rowes_respuestas.length - 1].ciudad = mensaje[3]
-        rowes_respuestas[rowes_respuestas.length - 1].latitud = mensaje[4]
-        rowes_respuestas[rowes_respuestas.length - 1].longitud = mensaje[5]
+    console.log('Procesando datos')
 
-        accessSpreadsheet(true)
+    rowes_respuestas[rowes_respuestas.length] = rowes_respuestas[rowes_respuestas.length - 1]
+    rowes_respuestas[rowes_respuestas.length - 1].ip = mensaje[0]
+    rowes_respuestas[rowes_respuestas.length - 1].pais = mensaje[1]
+    rowes_respuestas[rowes_respuestas.length - 1].region = mensaje[2]
+    rowes_respuestas[rowes_respuestas.length - 1].ciudad = mensaje[3]
+    rowes_respuestas[rowes_respuestas.length - 1].latitud = mensaje[4]
+    rowes_respuestas[rowes_respuestas.length - 1].longitud = mensaje[5]
+
+    console.log('Datos procesados')
+
+    accessSpreadsheet(true)
 
 }
 
@@ -109,7 +115,6 @@ app.get('/', function(req, res) {
 
         var datos = [res.ip, res.countryCode, res.region, res.city, res.latitude, res.longitude]
 
-        accessSpreadsheet()
         agregarRespuesta(datos)
      
     });
